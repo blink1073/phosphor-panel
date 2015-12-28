@@ -1,6 +1,6 @@
 {
   "name": "phosphor-panel",
-  "version": "0.1.0",
+  "version": "1.0.0-rc.0",
   "description": "A convenient Phosphor panel widget and layout.",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
