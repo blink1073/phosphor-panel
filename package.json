@@ -4,7 +4,11 @@
   "description": "A convenient Phosphor panel widget and layout.",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
-  "dependencies": {},
+  "dependencies": {
+    "phosphor-arrays": "^1.0.6",
+    "phosphor-messaging": "^1.0.6",
+    "phosphor-widget": "^1.0.0-rc.0"
+  },
   "devDependencies": {
     "browserify-css": "^0.6.1",
     "browserify-istanbul": "^0.2.1",
