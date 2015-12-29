@@ -7,8 +7,7 @@ module.exports = function (config) {
     files: ['build/*.js'],
     port: 9876,
     colors: true,
-    singleRun: false,
-    debug: true,
+    singleRun: true,
     logLevel: config.LOG_INFO
   });
 };
