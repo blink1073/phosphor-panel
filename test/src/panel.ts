@@ -52,7 +52,6 @@ describe('phosphor-panel', () => {
 
     });
 
-
     describe('#childAt()', () => {
 
       it('should get the child widget at the specified index', () => {
@@ -111,7 +110,7 @@ describe('phosphor-panel', () => {
         panel.addChild(widgets[1]);
         panel.addChild(widgets[0]);
         expect(panel.childIndex(widgets[0])).to.be(1);
-      })
+      });
 
     });
 

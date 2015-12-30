@@ -10,7 +10,7 @@
 import expect = require('expect.js');
 
 import {
-  Message, sendMessage
+  Message
 } from 'phosphor-messaging';
 
 import {
@@ -61,13 +61,12 @@ class LogLayout extends PanelLayout {
     super.onChildRemoved(msg);
     this.methods.push('onChildRemoved');
   }
-
 }
 
 
 class LogPanel extends Panel {
 
-  static createLayout(): PanelLayout {
+  static createLayout(): LogLayout {
     return new LogLayout();
   }
 }
@@ -157,7 +156,7 @@ describe('phosphor-panel', () => {
         layout.addChild(widgets[1]);
         layout.addChild(widgets[0]);
         expect(layout.childIndex(widgets[0])).to.be(1);
-      })
+      });
 
     });
 
@@ -218,6 +217,14 @@ describe('phosphor-panel', () => {
 
     describe('#attachChild()', () => {
 
+      it('should be called when a child is added', () => {
+        let panel = new LogPanel();
+        let layout = panel.layout as LogLayout;
+        expect(layout.methods.indexOf('attachChild')).to.be(-1);
+        panel.addChild(new LogWidget());
+        expect(layout.methods.indexOf('attachChild')).to.not.be(-1);
+      });
+
       it('should attach panel children', () => {
         let panel = new LogPanel();
         let children = [new LogWidget(), new LogWidget()];
@@ -264,16 +271,14 @@ describe('phosphor-panel', () => {
 
     describe('#detachChild()', () => {
 
-      it('should be called when a child is detached', () => {
+      it('should be called when a child is removed', () => {
         let children = [new Widget(), new Widget()];
         let panel = new LogPanel();
         panel.addChild(children[0]);
         panel.addChild(children[1]);
-        panel.attach(document.body);
         children[1].parent = null;
         let layout = panel.layout as LogLayout;
         expect(layout.methods.indexOf('detachChild')).to.not.be(-1);
-        panel.dispose();
       });
 
       it("should send a `'before-detach'` message if appropriate", () => {
@@ -301,20 +306,6 @@ describe('phosphor-panel', () => {
         children[1].parent = null;
         let layout = panel.layout as LogLayout;
         expect(layout.methods.indexOf('onChildRemoved')).to.not.be(-1);
-        panel.dispose();
-      });
-
-      it("should send a `'before-detach'` message if appropriate", () => {
-        let children = [new LogWidget(), new LogWidget()];
-        let panel = new LogPanel();
-        panel.addChild(children[0]);
-        panel.addChild(children[1]);
-        panel.attach(document.body);
-        children[1].parent = null;
-        let layout = panel.layout as LogLayout;
-        expect(layout.methods.indexOf('onChildRemoved')).to.not.be(-1);
-        expect(children[1].messages.indexOf('before-detach')).to.not.be(-1);
-        panel.dispose();
       });
 
     });
