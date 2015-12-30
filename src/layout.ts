@@ -106,6 +106,13 @@ class PanelLayout extends AbstractLayout {
    * @param child - The child widget to remove from the layout.
    *
    * #### Notes
+   * A child widget will be removed from the layout automatically when
+   * its `parent` is set to `null`. This method should only be invoked
+   * directly when removing a widget from a layout which has yet to be
+   * installed on a parent widget.
+   *
+   * This method does *not* modify the widget's `parent`.
+   *
    * If the child is not contained in the layout, this is a no-op.
    */
   removeChild(child: Widget): void {
