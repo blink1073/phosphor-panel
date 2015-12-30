@@ -190,6 +190,29 @@ describe('phosphor-panel', () => {
 
     });
 
+    describe('#removeChild()', () => {
+
+      it('should remove the specified child', () => {
+        let widgets = [new Widget(), new Widget()];
+        let layout = new PanelLayout();
+        layout.addChild(widgets[0]);
+        layout.addChild(widgets[1]);
+        layout.removeChild(widgets[0]);
+        expect(layout.childCount()).to.be(1);
+        expect(layout.childAt(0)).to.be(widgets[1]);
+      });
+
+      it('should be a no-op if the child is not in the layout', () => {
+        let widgets = [new Widget(), new Widget()];
+        let layout = new PanelLayout();
+        layout.addChild(widgets[0]);
+        layout.addChild(widgets[1]);
+        layout.removeChild(new Widget());
+        expect(layout.childCount()).to.be(2);
+      });
+
+    });
+
     describe('#initialize()', () => {
 
       it('should be called when the layout is installed', () => {
