@@ -139,11 +139,6 @@ class PanelLayout extends AbstractLayout {
    */
   protected attachChild(index: number, child: Widget): void {
     let ref = this.childAt(index + 1);
-    if (ref && ref.node) {
-      if (!this.parent.node.contains(ref.node)) {
-        ref = null;
-      }
-    }
     this.parent.node.insertBefore(child.node, ref && ref.node);
     if (this.parent.isAttached) sendMessage(child, Widget.MsgAfterAttach);
   }
