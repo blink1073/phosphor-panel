@@ -151,8 +151,8 @@ class PanelLayout extends AbstractLayout {
    * attached to the DOM.
    */
   protected attachChild(index: number, child: Widget): void {
-    let ref = this.childAt(index + 1);
-    this.parent.node.insertBefore(child.node, ref && ref.node);
+    let ref = this.parent.node.children[index];
+    this.parent.node.insertBefore(child.node, ref);
     if (this.parent.isAttached) sendMessage(child, Widget.MsgAfterAttach);
   }
 
@@ -180,9 +180,10 @@ class PanelLayout extends AbstractLayout {
    * the child if the parent is attached to the DOM.
    */
   protected moveChild(fromIndex: number, toIndex: number, child: Widget): void {
-    let ref = this.childAt(toIndex + 1);
     if (this.parent.isAttached) sendMessage(child, Widget.MsgBeforeDetach);
-    this.parent.node.insertBefore(child.node, ref && ref.node);
+    this.parent.node.removeChild(child.node);
+    let ref = this.parent.node.children[toIndex];
+    this.parent.node.insertBefore(child.node, ref);
     if (this.parent.isAttached) sendMessage(child, Widget.MsgAfterAttach);
   }
 
