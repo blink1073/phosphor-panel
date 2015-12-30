@@ -238,6 +238,30 @@ describe('phosphor-panel', () => {
         panel.dispose();
       });
 
+      it('should add child nodes in the proper order', () => {
+        let parent = new Widget();
+        let layout = new PanelLayout();
+        let children = [new Widget(), new Widget(), new Widget()];
+        layout.addChild(children[1]);
+        layout.addChild(children[2]);
+        layout.addChild(children[0]);
+        parent.layout = layout;
+        expect(parent.node.children[0]).to.be(children[1].node);
+        expect(parent.node.children[1]).to.be(children[2].node);
+        expect(parent.node.children[2]).to.be(children[0].node);
+      });
+
+      it('should insert child nodes in the proper order', () => {
+        let parent = new Panel();
+        let children = [new Widget(), new Widget(), new Widget()];
+        parent.addChild(children[0]);
+        parent.insertChild(0, children[2]);
+        parent.insertChild(1, children[1]);
+        expect(parent.node.children[0]).to.be(children[2].node);
+        expect(parent.node.children[1]).to.be(children[1].node);
+        expect(parent.node.children[2]).to.be(children[0].node);
+      });
+
     });
 
     describe('#moveChild()', () => {
@@ -267,6 +291,22 @@ describe('phosphor-panel', () => {
         panel.dispose();
       });
 
+      it('should move child nodes to the proper location', () => {
+        let parent = new Panel();
+        let children = [new Widget(), new Widget(), new Widget()];
+        parent.addChild(children[0]);
+        parent.addChild(children[1]);
+        parent.addChild(children[2]);
+        parent.insertChild(1, children[0]);
+        expect(parent.node.children[0]).to.be(children[1].node);
+        expect(parent.node.children[1]).to.be(children[0].node);
+        expect(parent.node.children[2]).to.be(children[2].node);
+        parent.addChild(children[1]);
+        expect(parent.node.children[0]).to.be(children[0].node);
+        expect(parent.node.children[1]).to.be(children[2].node);
+        expect(parent.node.children[2]).to.be(children[1].node);
+      });
+
     });
 
     describe('#detachChild()', () => {
@@ -292,6 +332,24 @@ describe('phosphor-panel', () => {
         expect(layout.methods.indexOf('detachChild')).to.not.be(-1);
         expect(children[1].messages.indexOf('before-detach')).to.not.be(-1);
         panel.dispose();
+      });
+
+      it('should remove child nodes from the parent', () => {
+        let parent = new Panel();
+        let children = [new Widget(), new Widget(), new Widget()];
+        parent.addChild(children[0]);
+        parent.addChild(children[1]);
+        parent.addChild(children[2]);
+        expect(parent.node.children[0]).to.be(children[0].node);
+        expect(parent.node.children[1]).to.be(children[1].node);
+        expect(parent.node.children[2]).to.be(children[2].node);
+        children[0].parent = null;
+        expect(parent.node.children[0]).to.be(children[1].node);
+        expect(parent.node.children[1]).to.be(children[2].node);
+        children[1].parent = null;
+        expect(parent.node.children[0]).to.be(children[2].node);
+        children[2].parent = null;
+        expect(parent.node.children.length).to.be(0);
       });
 
     });
