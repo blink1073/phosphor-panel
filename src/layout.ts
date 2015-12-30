@@ -101,6 +101,19 @@ class PanelLayout extends AbstractLayout {
   }
 
   /**
+   * Remove a child widget from the layout.
+   *
+   * @param child - The child widget to remove from the layout.
+   *
+   * #### Notes
+   * If the child is not contained in the layout, this is a no-op.
+   */
+  removeChild(child: Widget): void {
+    let i = arrays.remove(this._children, child);
+    if (i !== -1 && this.parent) this.detachChild(i, child);
+  }
+
+  /**
    * Initialize the children of the layout.
    *
    * #### Notes
@@ -207,8 +220,7 @@ class PanelLayout extends AbstractLayout {
    * Subclasses should **not** typically reimplement this method.
    */
   protected onChildRemoved(msg: ChildMessage): void {
-    let i = arrays.remove(this._children, msg.child);
-    if (i !== -1) this.detachChild(i, msg.child);
+    this.removeChild(msg.child);
   }
 
   private _children: Widget[] = [];
