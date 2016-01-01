@@ -30,6 +30,11 @@ import {
 export
 class PanelLayout extends AbstractLayout {
   /**
+   * The static type of the constructor.
+   */
+  "constructor": typeof PanelLayout;
+
+  /**
    * Dispose of the resources held by the layout.
    *
    * #### Notes
