@@ -47,12 +47,17 @@ class Panel extends Widget {
   }
 
   /**
+   * The static type of the constructor.
+   */
+  "constructor": typeof Panel;
+
+  /**
    * Construct a new panel.
    */
   constructor() {
     super();
     this.addClass(PANEL_CLASS);
-    this.layout = (this.constructor as typeof Panel).createLayout();
+    this.layout = this.constructor.createLayout();
   }
 
   /**
