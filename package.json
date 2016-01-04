@@ -32,8 +32,7 @@
   },
   "scripts": {
     "clean": "rimraf lib && rimraf test/coverage",
-    "build:src": "tsc --project src",
-    "build": "npm run build:src",
+    "build": "tsc --project src",
     "docs": "rimraf docs/api && typedoc --options scripts/tdoptions.json",
     "postinstall": "npm dedupe",
     "prepublish": "npm run build",
